@@ -1,0 +1,41 @@
+
+._main-container-manage{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table{
+    width: 80%;
+    margin-top: 50px;
+}
+
+._manage-button-delete{
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(255, 0, 0, 0.486);
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+._manage-button-edit{
+    display: block;
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    background-color: #26be95b4;
+    border-radius: 5px;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+    &:hover{
+        color: black;
+    }
+}
+
+
+
