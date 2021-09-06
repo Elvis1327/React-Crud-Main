@@ -6,6 +6,10 @@ export const TYPES = {
     createOneUser: '[CRUD] Create one user',
     editOneUser: '[CRUD] Edit one user',
     deleteOneUser: '[CRUD] Delete one user',
+
+    authLogin: '[AUTH] Login User',
+    authRegister: '[AUTH] Register User',
+    logoutRegister: '[AUTH] Logout User',
 }
 
 

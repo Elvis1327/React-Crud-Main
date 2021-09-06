@@ -1,0 +1,33 @@
+
+
+._login-main-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+._login-form{
+    margin-top: 50px;
+    width: 600px;
+}
+._login-form h1{
+    border-bottom: 1px solid #ccc;
+}
+
+label{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.__login-submit{
+    width: 100%;
+    padding: 7px;
+    outline: none;
+    border: none;
+    background-color: $emerald;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 19px;
+}
+
+

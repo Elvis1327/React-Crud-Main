@@ -1,12 +1,16 @@
 
 
 $black-boots: #212529;
+$emerald: #26BE96;
 
 @import './components/navbar';
 @import './components/createUsers';
 @import './components/manageUsers';
 @import './components/navbar';
 @import './components/404';
+@import './components/spiners';
+@import './components/login';
+@import './components/register';
 
 
 

@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { CreateUser } from '../components/crud/CreateUser';
-import { ManageUsers } from '../components/crud/ManageUsers';
 import { Navbar } from '../components/shared/Navbar';
 import { NotMatch } from '../components/shared/NotMatch';
+import { AuthRouter } from './AuthRouter';
+import { CrudRouter } from './CrudRouter';
 
 export const AppRouter = () => {
     return (
@@ -10,9 +10,8 @@ export const AppRouter = () => {
             <div>
                 <Navbar />
                 <Switch>
-                    <Route exact path="/create" component={CreateUser} />
-                    <Route exact path="/create/:id" component={CreateUser} />
-                    <Route exact path="/" component={ManageUsers} />
+                    <Route path="/auth" component={AuthRouter} />
+                    <Route path="/" component={CrudRouter} />
                     <Route path="*" component={NotMatch} />
                 </Switch>
             </div>

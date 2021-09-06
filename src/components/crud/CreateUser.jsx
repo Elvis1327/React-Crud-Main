@@ -9,8 +9,8 @@ export const CreateUser = () => {
     const dispatch = useDispatch();
     const { users } = useSelector(state => state.crud);
     const { id } = useParams();
-    const { inputsData, handleInputChange, setInputsData } = useForm({
-        _id: '',
+    const { inputsData, handleInputChange, setInputsData, resetForm } = useForm({
+        _id: id,
         nombre: '',
         email: '',
         sueldo: ''
@@ -25,7 +25,7 @@ export const CreateUser = () => {
                 nombre: usuario.nombre,
                 email: usuario.email,
                 sueldo: usuario.sueldo
-            })
+            });
         }
     },[id, dispatch, setInputsData, users]);
 
@@ -35,9 +35,10 @@ export const CreateUser = () => {
         e.preventDefault(); 
         
         if(id){
-            dispatch(editOneUserAction(inputsData))
+            dispatch(editOneUserAction(inputsData));
+            resetForm()
         }else{
-            dispatch(createOneUserAction(inputsData))
+            dispatch(createOneUserAction(inputsData));
         }
     };
 
