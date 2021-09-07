@@ -25,6 +25,10 @@
     display: block;
     outline: none;
     border: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: center;
     width: 100%;
     padding: 10px;
     background-color: #26be95b4;

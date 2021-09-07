@@ -32,11 +32,10 @@ export const CreateUser = () => {
     const { nombre, email } = inputsData;
     // MY FUNCTIONS
     const handleFormSubmit = (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
         
         if(id){
             dispatch(editOneUserAction(inputsData));
-            resetForm()
         }else{
             dispatch(createOneUserAction(inputsData));
         }

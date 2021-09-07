@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 export const ManageUsers = () => {
     const dispatch = useDispatch();
-    const { users } = useSelector(state => state.crud); 
+    const { users, loading } = useSelector(state => state.crud); 
 
     useEffect(()=> {
         dispatch(getAllUsersAction())
@@ -15,6 +15,10 @@ export const ManageUsers = () => {
         dispatch(deleteOneUserAction(id))
         dispatch(getAllUsersAction());
     };
+
+    if(loading === true){
+        return <div className="loader"></div>
+    }
 
     return (
         <div className="_main-container-manage">

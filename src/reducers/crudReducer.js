@@ -2,7 +2,8 @@ import { TYPES } from "../types/types";
 
 const initialState = {
     users: [],
-    user: {}
+    user: {},
+    loading: true
 }
 
 export const crudReducer = (state = initialState, action) => {
@@ -10,7 +11,8 @@ export const crudReducer = (state = initialState, action) => {
         case TYPES.getAllUsers:
             return {
                 ...state,
-                users: action.payload
+                users: action.payload,
+                loading: false
             };
         case TYPES.getOneUser:
             return {
