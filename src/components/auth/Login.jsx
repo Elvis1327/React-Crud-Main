@@ -1,21 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from '../../hooks/useForm';
 import { useDispatch } from 'react-redux';
 import { loginAction } from '../../actions/auth-action';
 
 export const Login = () => {
     const dispatch = useDispatch();
+    const [ errors, SetErrors ] = useState({});
 
     const { handleInputChange, inputsData } = useForm({
         _id: '',
         email: '',
         password: ''
     });
+    const { email, password } = inputsData;
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+
+        if(validateForm()){
+            SetErrors({})
+        }
+        
         dispatch(loginAction(inputsData))
+    };
+
+    const validateForm = () => {
+
+        if(password.lenght <= 5){
+            SetErrors({formPassword: 'La Password debe de tener 5 o mas caracteres'})
+            return false
+        }
+
+        return true
     }
+
 
 
     return (
@@ -46,6 +64,7 @@ export const Login = () => {
                         placeholder="Introduce your Password Here"
                         onChange={handleInputChange}
                     />
+                    {errors?.formPassword && <p> {errors.formPassword} </p>}
                 </div>
                 <button type="submit" className="__login-submit">
                     Login

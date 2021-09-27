@@ -12,7 +12,6 @@ export const loginAction = (user) => {
     return async (dispatch) => {
         try{
             const resp = await authLoginFetch(user);
-            console.log(resp)
             if(resp.ok === true){
                 localStorage.setItem('token', resp.token)
                 dispatch(login(resp));
