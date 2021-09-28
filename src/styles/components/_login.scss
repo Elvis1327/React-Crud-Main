@@ -5,6 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: 'Poppins';
 }
 ._login-form{
     margin-top: 50px;
@@ -29,5 +30,13 @@ label{
     font-weight: bold;
     font-size: 19px;
 }
+
+._form-errors-login{
+    color: red;
+    font-size: 16px;
+    padding: 0px;
+    margin: 0px;
+}
+
 
 

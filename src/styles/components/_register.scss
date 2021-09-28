@@ -3,6 +3,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    font-family: 'Poppins';
 }
 
 ._register-form{
@@ -18,6 +19,12 @@
     border-radius: 10px;
     font-weight: bold;
     font-size: 19px;
+}
+
+._errors-form-register{
+    color: red;
+    font-family: 16px;
+    margin: 0px;
 }
 
 

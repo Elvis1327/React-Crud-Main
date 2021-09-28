@@ -2,7 +2,7 @@ import { TYPES } from '../types/types';
 
 const initialState = {
     user: {},
-    check: false
+    check: false,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -11,19 +11,19 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload.email,
-                check: true
+                check: true,
             };
         case TYPES.authRegister:
             return {
                 ...state,
                 user: action.payload,
-                check: true
+                check: true,
             }
         case TYPES.logoutRegister:
             return {
                 ...state,
                 check: action.payload
-            }
+            };
         default:
             return state
     };

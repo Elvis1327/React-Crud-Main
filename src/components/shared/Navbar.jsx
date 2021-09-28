@@ -21,15 +21,15 @@ export const Navbar = () => {
                 <nav className="_header-navbar">
                     <ul className="_header-ul">
                         <li className="_header-li">
-                            <Link className="links" to="/create" >Create</Link>
+                            <Link className="links" to="/crud/create" >Create</Link>
                         </li>
                         <li className="_header-li">
-                            <Link className="links" to="/" >Manage</Link>
+                            <Link className="links" to="/crud/manage" >Manage</Link>
                         </li>
-                        <li>
+                        <li onClick={handleButtonLogout}>
                             <button 
                                 className="_logout-button"
-                                onClick={handleButtonLogout}
+                                
                             >
                                 Logout
                             </button>
