@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerAction } from '../../actions/auth-action';
 import { useForm } from '../../hooks/useForm';
 import Validator from 'validator';
 
 export const Register = () => {
     const dispatch = useDispatch();
+    const { loading } = useSelector(state => state.spinnerAuth)
     const [ errors, setErrors ] = useState({});
     const { handleInputChange, inputsData } = useForm({
         _id: '',
@@ -17,18 +18,21 @@ export const Register = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+
         if(validateFormRegister()){
             setErrors({});
         }
+
         dispatch(registerAction(inputsData));;
     };
 
     const validateFormRegister = () => {
+
         if(nombre.length < 5){
             setErrors({msgNombre: 'El Nombre debe de tener 5 o mas caracteres'});
             return false;
         }
-        else if(!Validator.isEmail()){
+        else if(!Validator.isEmail(email)){
             setErrors({msgEmail: 'El Email debe de tener caracteres validos'});
             return false;
         }
@@ -36,7 +40,7 @@ export const Register = () => {
             setErrors({msgEmail: 'El Email debe de tener 5 o mas caracteres'});
             return false;
         }
-        else if(password.length){
+        else if(password.length < 5){
             setErrors({msgPassword: 'Las Password debe de tener  5 o mas caracteres'});
             return false;
         }
@@ -83,7 +87,14 @@ export const Register = () => {
                     />
                     {errors?.msgPassword && <p className="_errors-form-register"> {errors.msgPassword} </p> }
                 </div>
-                <button type="submit" className="_register-button">Register</button>
+                {loading === true
+                    ?
+                    <div className="_register-loading-form">
+                        <div className="_register-spinner"></div>
+                    </div>
+                    :
+                    <button type="submit" className="_register-button">Register</button>
+                }
             </form>
         </div>
     )

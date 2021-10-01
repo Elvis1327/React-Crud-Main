@@ -36,7 +36,7 @@ export const Login = () => {
             SetErrors({msgEmail: 'El Email debe de tener caracteres Validos'});
             return false;
         }
-        if(password.length < 5){
+        else if(password.length < 5){
             SetErrors({msgPassword: 'La Password debe de tener 5 o mas caracteres'});
             return false;
         }
