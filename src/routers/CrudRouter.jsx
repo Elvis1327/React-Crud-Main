@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom'; 
+import { Route, Switch, Redirect } from 'react-router-dom'; 
 import { CreateUser } from '../components/crud/CreateUser';
 import { ManageUsers } from '../components/crud/ManageUsers';
 
@@ -8,9 +8,10 @@ export const CrudRouter = () => {
         <div>
             <div>
                 <Switch>
-                    <Route exact path="/create" component={CreateUser} />
-                    <Route exact path="/create/:id" component={CreateUser} />
-                    <Route exact path="/" component={ManageUsers} />
+                    <Route exact path="/crud/create" component={CreateUser} />
+                    <Route exact path="/crud/create/:id" component={CreateUser} />
+                    <Route exact path="/crud/manage" component={ManageUsers} />
+                    <Redirect to="/crud/manage" />
                 </Switch>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navbar } from '../components/shared/Navbar';
 import { NotMatch } from '../components/shared/NotMatch';
@@ -28,14 +28,11 @@ export const AppRouter = () => {
                         isAuthenticated={check}
                     />
                     <PrivateRoute 
-                        path="/" 
+                        path="/crud" 
                         component={CrudRouter}
                         isAuthenticated={check}
                     />
-                    <Route 
-                        path="*" 
-                        component={NotMatch} 
-                    />
+                    <Redirect to="/auth/login" /> 
                 </Switch>
             </div>
         </Router>

@@ -1,14 +1,9 @@
-# Crud Practice 2.0
-Este es el segundo crud Con react js en este Ejemplo
-hice una pagina 404 si el usuario entra a una ruta equivocada.
+# Crud Practice 
+En este Crud implemento el estandar mas utilizado en la web de CREATE, READ, ELIMINATE, EDIT
+Cree mi propio Backend y Front-end.
 
-## Buen color verde para botones
-#26BE96
-
-## Este Crud Es mejor que el otro
-En comparacion al otro crud este tiene la parte de edit en el mismo componente
-redirecionando al componente CreateUser para editar, pero con otro path mandandole un id
-en el otro crud hice otro componente para editar
+## About
+Hay una seccion de login la cual el Usuario debe logearse antes de poder acceder al Crud.
 
 ## Tecnologias Utulizadas
 
@@ -23,5 +18,5 @@ en el otro crud hice otro componente para editar
 ### Back-End
 1. Node Js.
 2. Express Js.
-
+3. MongoDB.
 
