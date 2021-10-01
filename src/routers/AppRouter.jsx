@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navbar } from '../components/shared/Navbar';
-import { NotMatch } from '../components/shared/NotMatch';
 import { AuthRouter } from './AuthRouter';
 import { CrudRouter } from './CrudRouter';
 import { PrivateRoute } from './PrivateRoute';

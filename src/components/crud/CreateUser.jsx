@@ -11,7 +11,7 @@ export const CreateUser = () => {
     const { users } = useSelector(state => state.crud);
     const { id } = useParams();
     const [ errors, setErrors ] = useState({});
-    const { inputsData, handleInputChange, setInputsData, resetForm } = useForm({
+    const { inputsData, handleInputChange, setInputsData } = useForm({
         _id: id,
         nombre: '',
         email: '',
@@ -114,7 +114,7 @@ export const CreateUser = () => {
                     />
                     {errors?.msgSueldo && <p className="_create-form-validation"> {errors.msgSueldo} </p> }
                 </div>
-                <button className="_create-button"> {id ? 'Edit User' : 'Create User' } </button>
+                <button to="/crud/manage" className="_create-button"> {id ? 'Edit User' : 'Create User' } </button>
             </form>
         </div>
     );

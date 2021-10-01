@@ -41,7 +41,7 @@ export const ManageUsers = () => {
                             <td> 
                                 <Link 
                                     className="_manage-button-edit" 
-                                    to={`/create/${user._id}`}
+                                    to={`/crud/create/${user._id}`}
                                     > 
                                     <i className="fas fa-edit"></i> 
                                     Edit
