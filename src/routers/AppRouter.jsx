@@ -1,40 +1,42 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import { Navbar } from '../components/shared/Navbar';
-import { AuthRouter } from './AuthRouter';
-import { CrudRouter } from './CrudRouter';
-import { PrivateRoute } from './PrivateRoute';
-import { PublicRoute } from './PublicRoute';
 import { validateTokenAction } from '../actions/auth-action';
+// Routes
+import { AuthRouter, CrudRouter, PrivateRoute, PublicRoute } from './index';
 
 export const AppRouter = () => {
     const dispatch = useDispatch();
-    const { check } = useSelector(state => state.auth)
 
     useEffect(() => {
         dispatch(validateTokenAction());
     },[dispatch])
 
     return (
-        <Router>    
+        <BrowserRouter>    
             <div>
                 <Navbar />
-                <Switch>
-                    <PublicRoute 
-                        path="/auth" 
-                        component={AuthRouter}
-                        isAuthenticated={check}
-                    />
-                    <PrivateRoute 
-                        path="/crud" 
-                        component={CrudRouter}
-                        isAuthenticated={check}
-                    />
-                    <Redirect to="/auth/login" /> 
-                </Switch>
+                <Routes>
+
+                    <Route path="auth/*" element={
+                        <PublicRoute>
+                            <AuthRouter />
+                        </PublicRoute>
+                    } />
+
+
+                    <Route path='crud/*' element={
+                        <PrivateRoute>
+                            <CrudRouter />
+                        </PrivateRoute>
+                    } />
+
+                    <Route path="/" element={<Navigate to="/auth/login" />} />
+                </Routes>
             </div>
-        </Router>
+        </BrowserRouter>
     )
 }
 

@@ -1,23 +1,18 @@
 import React from 'react';
-import Proptypes from 'prop-types';
-import { Redirect, Route } from 'react-router';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
-export const PublicRoute = ({
-    isAuthenticated,
-    component: Component,
-    ...rest
-}) => {
+
+
+export const PublicRoute = ({children}) => {
+
+    const { check } = useSelector(state => state.auth)
+
     return (
-        <Route {...rest}
-            component={(props) => (
-                (isAuthenticated === false)
-                ? (<Component {...props} />)
-                : (<Redirect to="/crud/manage" />)
-            )}
-        />
+        <>
+            {check === false ? children : <Navigate to="/crud/manage" />}
+        </>
     )
 }
 
-PublicRoute.prototype = {
-    isAuthenticated: Proptypes.bool.isRequired
-};
+
