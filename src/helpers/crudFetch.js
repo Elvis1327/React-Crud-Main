@@ -1,32 +1,34 @@
-import axios from 'axios';
+import { restApiData } from './auth-fetfch';
 
-const mainUrl = 'https://crud-practice13.herokuapp.com';
 
 // GET ALL USERS
 export const getAllUsersFetch = async () => {
-    const { data } = await axios.get(`${mainUrl}/api/get-all`);
+    const { data } = await restApiData.get('/api/crud/get-all');
     return data;
 };
+ 
 // GET ONE USER
 export const getOneUserFetch = async (id) => {
-    const { data } = await axios.get(`${mainUrl}/api/get-one/${id}`);
+    const { data } = await restApiData.get(`/api/crud/get-one/${id}`);
     return data.oneUser;
 };
+
 // CREATE ONE USER
 export const createOneUserFetch = async (user) => {
-    const { data } = await axios.post(`${mainUrl}/api/create-user`, user);
-    return data.usuario;
+    const { data } = await restApiData.post(`/api/crud/create-user`, user);
+    return data
 };
+
 // DELETE USER
 export const deleteOneUserFetch = async (id) => {
-    const { data }  = await axios.delete(`${mainUrl}/api/delete-user/${id}`);
+    const { data }  = await restApiData.delete(`/api/crud/delete-user/${id}`);
     return data.deletedUser;
 };
 // EDIT ONE USER
 export const editOneUserFetch = async (body) => {
-    const { data } = await axios.put(`${mainUrl}/api/edit-user/${body._id}`, body);
+    const { data } = await restApiData.put(`/api/crud/edit-user/${body._id}`, body);
     return data.user;
-}
+};
 
 
 
