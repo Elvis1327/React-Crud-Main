@@ -1,6 +1,7 @@
 import { TYPES } from "../types/types"
-import { authLoginFetch, authRegisterFetch, authValidateToken } from '../helpers/auth-fetfch';
+import { authLoginFetch, authRegisterFetch } from '../helpers/auth-fetfch';
 import { spinnerFinishForm, spinnerStartForm } from './spiner-form-action';
+import { authValidateToken } from '../helpers/auth-fetfch';
 
 // LOGIN
 const login = (user) => {
@@ -52,16 +53,20 @@ export const registerAction = (body) => {
         }
     };
 };
+
 // VALIDATE TOKEN
 export const validateTokenAction = () => {
     return async (dispatch) => {
         const resp = await authValidateToken();
-            dispatch(login(resp));
+            dispatch(login({
+                email: resp.email
+            }));
             dispatch(register({
                 email: resp.email
             }));
     };
 }
+
 // LOGOUT
 const logout = () => {
     return {
