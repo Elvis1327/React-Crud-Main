@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { registerAction } from '../../actions/auth-action';
 import { useForm } from '../../hooks/useForm';
-import Validator from 'validator';
 
 export const Register = () => {
     const dispatch = useDispatch();
     const { loading } = useSelector(state => state.spinnerAuth)
-    const [ errors, setErrors ] = useState({});
     const { handleInputChange, inputsData } = useForm({
         _id: '',
         nombre: '',
@@ -19,36 +18,11 @@ export const Register = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-        if(validateFormRegister()){
-            setErrors({});
-        }
-
         dispatch(registerAction(inputsData));;
     };
 
-    const validateFormRegister = () => {
-
-        if(nombre.length < 5){
-            setErrors({msgNombre: 'El Nombre debe de tener 5 o mas caracteres'});
-            return false;
-        }
-        else if(!Validator.isEmail(email)){
-            setErrors({msgEmail: 'El Email debe de tener caracteres validos'});
-            return false;
-        }
-        else if(email.length < 5){
-            setErrors({msgEmail: 'El Email debe de tener 5 o mas caracteres'});
-            return false;
-        }
-        else if(password.length < 5){
-            setErrors({msgPassword: 'Las Password debe de tener  5 o mas caracteres'});
-            return false;
-        }
-        return true;
-    }
-
     return (
-        <div className="_register-main-container">
+        <section className="_register-main-container">
             <form onSubmit={handleFormSubmit} className="_register-form">
                 <h1>Register</h1>
                 <div className="inputs">
@@ -60,8 +34,8 @@ export const Register = () => {
                         placeholder="Introduce your Name here"
                         name="nombre"
                         onChange={handleInputChange}
+                        value={nombre}
                     />
-                    {errors?.msgNombre && <p className="_errors-form-register"> {errors.msgNombre} </p> }
                 </div>
                 <div className="inputs">
                     <label>Email</label>
@@ -71,9 +45,9 @@ export const Register = () => {
                         className="input"
                         placeholder="Introduce your Name here"
                         name="email"
+                        value={email}
                         onChange={handleInputChange}
                     />
-                    {errors?.msgEmail && <p className="_errors-form-register"> {errors.msgEmail} </p> }
                 </div>
                 <div className="inputs">
                     <label>Password</label>
@@ -83,9 +57,9 @@ export const Register = () => {
                         className="input"
                         placeholder="Introduce your Name here"
                         name="password"
+                        value={password}
                         onChange={handleInputChange}
                     />
-                    {errors?.msgPassword && <p className="_errors-form-register"> {errors.msgPassword} </p> }
                 </div>
                 {loading === true
                     ?
@@ -96,7 +70,7 @@ export const Register = () => {
                     <button type="submit" className="_register-button">Register</button>
                 }
             </form>
-        </div>
+        </section>
     )
 }
 

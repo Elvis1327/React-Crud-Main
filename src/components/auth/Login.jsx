@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from '../../hooks/useForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../actions/auth-action';
-import Validator from 'validator';
 
 export const Login = () => {
     const dispatch = useDispatch();
     const { loading } = useSelector(state => state.spinnerAuth)
-    const [ errors, SetErrors ] = useState({});
 
     const { handleInputChange, inputsData } = useForm({
         _id: '',
@@ -18,35 +16,12 @@ export const Login = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-
-        if(validateForm()){
-            SetErrors({})
-        }
         
         dispatch(loginAction(inputsData))
     }
 
-    const validateForm = () => {
-        
-        if(email.length < 5){
-            SetErrors({msgEmail: 'El Email debe de tener 5 o masa caracteres'})
-            return false
-        }
-        else if(!Validator.isEmail(email)){
-            SetErrors({msgEmail: 'El Email debe de tener caracteres Validos'});
-            return false;
-        }
-        else if(password.length < 5){
-            SetErrors({msgPassword: 'La Password debe de tener 5 o mas caracteres'});
-            return false;
-        }
-        return true;
-    };
-
-
-
     return (
-        <div className="_login-main-container">
+        <section className="_login-main-container">
             <form 
                 onSubmit={handleFormSubmit} 
                 className="_login-form"
@@ -61,8 +36,8 @@ export const Login = () => {
                         name="email"
                         placeholder="Introduce Your Email Here"
                         onChange={handleInputChange}
+                        value={email}
                     />
-                    {errors?.msgEmail && <p className="_form-errors-login"> {errors.msgEmail}. </p> }
                 </div>
                 <div className="inputs">
                     <label>Password</label>
@@ -73,8 +48,8 @@ export const Login = () => {
                         name="password"
                         placeholder="Introduce your Password Here"
                         onChange={handleInputChange}
+                        value={password}
                     />
-                    {errors?.msgPassword && <p className="_form-errors-login"> {errors.msgPassword}. </p>}
                 </div>
                 {loading === true
                     ?
@@ -83,11 +58,11 @@ export const Login = () => {
                     </div>
                     :
                     <button type="submit" className="__login-submit">
-                    Login
+                        Login
                     </button>
                 }
             </form>
-        </div>
+        </section>
     )
 }
 
