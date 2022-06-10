@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useForm } from '../../hooks/useForm';
+import React, { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { useForm } from '../../hooks/useForm';
 import { createOneUserAction, editOneUserAction, getOneUserAction } from '../../actions/crudActions';
-import { useParams } from 'react-router-dom';
-import Validator from 'validator';
 
 export const CreateUser = () => {
-    // HOOKS
+
     const dispatch = useDispatch();
+
     const { users } = useSelector(state => state.crud);
+
     const { id } = useParams();
-    const [ errors, setErrors ] = useState({});
+
     const { inputsData, handleInputChange, setInputsData } = useForm({
         _id: id,
         nombre: '',
@@ -32,48 +34,27 @@ export const CreateUser = () => {
         }
     },[id, dispatch, setInputsData, users]);
 
+    const navigate = useNavigate();
 
-    // MY FUNCTIONS
     const handleFormSubmit = (e) => {
         e.preventDefault();
-
-        if(validateCrudForm()){
-            setErrors({});
-        }
         
         if(id){
             dispatch(editOneUserAction(inputsData));
+            navigate('/crud/manage');
         }else{
             dispatch(createOneUserAction(inputsData));
+            setInputsData({
+                id: "",
+                nombre: "",
+                email: "",
+                sueldo: ""
+            });
         };
     };
 
-    const validateCrudForm = () => {
-        if(nombre.length < 5){
-            setErrors({msgNombre: 'El Nombre debe tener 5 o mas caracteres'});
-            return false;
-        }
-        else if(email.length < 5){
-            setErrors({msgEmail: 'El Email debe de tener 5 o mas caracteres'});
-            return false;
-        }
-        else if(!Validator.isEmail(email)){
-            setErrors({msgEmail: 'El Email debe de tener caracteres validos'});
-            return false;
-        }
-        else if(sueldo.length < 5){
-            setErrors({msgSueldo: 'El sueldo debe de tener 5 o mas numeros'});
-            return false;
-        }
-        else if(!Validator.isNumeric(sueldo)){
-            setErrors({msgSueldo: 'El Sueldo debe contener solamente numeros'});
-            return false;
-        }
-        return true;
-    }
-
     return (
-        <div className="_main-create-container">
+        <section className="_main-create-container">
             <form onSubmit={handleFormSubmit}>
                 <h1 style={{fontWeight: 'bold', 
                     borderBottom: '1px solid rgba(0, 0, 0, 0.336)'}}>
@@ -89,7 +70,6 @@ export const CreateUser = () => {
                         onChange={handleInputChange}
                         value={nombre}
                     />
-                    {errors?.msgNombre && <p className="_create-form-validation"> {errors.msgNombre} </p> }
                 </div>
                 <div className="inputs">
                     <input 
@@ -101,7 +81,6 @@ export const CreateUser = () => {
                         onChange={handleInputChange}
                         value={email}
                     />
-                    {errors?.msgEmail && <p className="_create-form-validation"> {errors.msgEmail} </p> }
                 </div>
                 <div className="inputs">
                     <input 
@@ -110,13 +89,16 @@ export const CreateUser = () => {
                         autoComplete="off"
                         name="sueldo"
                         placeholder="introduce your sueldo"
+                        value={sueldo}
                         onChange={handleInputChange}
                     />
-                    {errors?.msgSueldo && <p className="_create-form-validation"> {errors.msgSueldo} </p> }
                 </div>
-                <button to="/crud/manage" className="_create-button"> {id ? 'Edit User' : 'Create User' } </button>
+                <button
+                    className="_create-button">
+                        {id ? 'Edit User' : 'Create User' } 
+                </button>
             </form>
-        </div>
+        </section>
     );
 };
 

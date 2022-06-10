@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteOneUserAction, getAllUsersAction } from '../../actions/crudActions';
 import { Link } from 'react-router-dom';
+
+import { deleteOneUserAction, getAllUsersAction } from '../../actions/crudActions';
 
 export const ManageUsers = () => {
     const dispatch = useDispatch();
     const { users, loading } = useSelector(state => state.crud); 
 
     useEffect(()=> {
-        dispatch(getAllUsersAction())
+        dispatch(getAllUsersAction());
     },[dispatch]);
 
     const handleDeleteUser = (id) => {
@@ -22,7 +23,14 @@ export const ManageUsers = () => {
 
     return (
         <div className="_main-container-manage">
-            <table className="table">
+            {users.length <= 0 
+                ?
+
+                <div class="alert alert-danger">
+                    There are not Users
+                </div>
+                :
+                <table className="table">
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -57,9 +65,11 @@ export const ManageUsers = () => {
                                 </button> 
                             </td>
                         </tr>
-                    ))};
+                    ))}
                 </tbody>
             </table>
+            }
+            
         </div>
     )
 }
