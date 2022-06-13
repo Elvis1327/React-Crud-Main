@@ -1,103 +1,88 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as yup from 'yup';
 
-import { useForm } from '../../hooks/useForm';
-import { createOneUserAction, editOneUserAction, getOneUserAction } from '../../actions/crudActions';
+import { createOneUserAction, editOneUserAction } from '../../actions/crudActions';
 
 export const CreateUser = () => {
 
     const dispatch = useDispatch();
 
-    const { users } = useSelector(state => state.crud);
-
     const { id } = useParams();
-
-    const { inputsData, handleInputChange, setInputsData } = useForm({
-        _id: id,
-        nombre: '',
-        email: '',
-        sueldo: ''
-    });
-    const { nombre, email, sueldo } = inputsData;
-
-    useEffect(()=> {
-        dispatch(getOneUserAction(id));
-        const usuario = users.find(user => user._id === id);
-        if(id){
-            setInputsData({
-                _id: id,
-                nombre: usuario.nombre,
-                email: usuario.email,
-                sueldo: usuario.sueldo
-            });
-        }
-    },[id, dispatch, setInputsData, users]);
 
     const navigate = useNavigate();
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-        
-        if(id){
-            dispatch(editOneUserAction(inputsData));
-            navigate('/crud/manage');
-        }else{
-            dispatch(createOneUserAction(inputsData));
-            setInputsData({
-                id: "",
-                nombre: "",
-                email: "",
-                sueldo: ""
-            });
-        };
-    };
-
     return (
         <section className="_main-create-container">
-            <form onSubmit={handleFormSubmit}>
-                <h1 style={{fontWeight: 'bold', 
-                    borderBottom: '1px solid rgba(0, 0, 0, 0.336)'}}>
-                        {!id ? 'Create One User' : 'Edit One User'}
-                </h1>
-                <div className="inputs">
-                    <input 
-                        type="text" 
-                        className="input"
-                        autoComplete="off"
-                        name="nombre"
-                        placeholder="introduce your name"
-                        onChange={handleInputChange}
-                        value={nombre}
-                    />
-                </div>
-                <div className="inputs">
-                    <input 
-                        type="text" 
-                        className="input"
-                        autoComplete="off"
-                        name="email"
-                        placeholder="introduce your email"
-                        onChange={handleInputChange}
-                        value={email}
-                    />
-                </div>
-                <div className="inputs">
-                    <input 
-                        type="text" 
-                        className="input"
-                        autoComplete="off"
-                        name="sueldo"
-                        placeholder="introduce your sueldo"
-                        value={sueldo}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <button
-                    className="_create-button">
-                        {id ? 'Edit User' : 'Create User' } 
-                </button>
-            </form>
+            <Formik
+                initialValues={{
+                    _id: id || '',
+                    nombre: "",
+                    email: "",
+                    sueldo: ""
+                }}
+                onSubmit={(values) => {
+                    if(values._id){
+                        dispatch(editOneUserAction(values));
+                        navigate('/crud/manage');
+                    }else{
+                        dispatch(createOneUserAction(values));
+                        
+                    };
+                }}
+                validationSchema={yup.object().shape({
+                    nombre: yup.string()
+                                .min(5, 'The name needs to have 5 or more letters')
+                                .required('Required'),
+                    email: yup.string()
+                                .email('the Email needs to have valid characters')
+                                .required('Required'),
+                    sueldo: yup.number()
+                            .required('Required')
+                })}
+            >
+                <Form>
+                        <h1 className='_create-h1'>
+                            {!id ? 'Create One User' : 'Edit One User'}
+                        </h1>
+                        <div className="inputs">
+                            <Field 
+                                name="nombre" 
+                                className="input" 
+                                placeholder="Introduce your Name"
+                            />
+                            <ErrorMessage 
+                                name='nombre' 
+                                render={errorMsg => <span className='_create-error-message-form'>{errorMsg}</span>} 
+                            />
+                        </div>
+                        <div className="inputs">
+                            <Field 
+                                name="email" 
+                                className="input" 
+                                placeholder="Introduce you Email" 
+                            />
+                            <ErrorMessage 
+                                name='email' 
+                                render={errorMsg => <span className='_create-error-message-form'>{errorMsg}</span>} 
+                            />
+                        </div>
+                        <div className="inputs">
+                            <Field 
+                                name="sueldo" 
+                                className="input" 
+                                placeholder="Introduce your Salary" 
+                            />
+                            <ErrorMessage 
+                                name='sueldo' 
+                                render={errorMsg => <span className='_create-error-message-form'>{errorMsg}</span>} 
+                            />
+                        </div>
+                        <button type="submit"  className="_create-button">Submit</button>
+                    </Form>
+            </Formik>
         </section>
     );
 };

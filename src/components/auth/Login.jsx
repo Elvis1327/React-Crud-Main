@@ -1,67 +1,76 @@
 import React from 'react';
-import { useForm } from '../../hooks/useForm';
 import { useDispatch, useSelector } from 'react-redux';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as yup from 'yup';
+
 import { loginAction } from '../../actions/auth-action';
 
 export const Login = () => {
     const dispatch = useDispatch();
     const { loading } = useSelector(state => state.spinnerAuth)
 
-    const { handleInputChange, inputsData } = useForm({
-        _id: '',
-        email: '',
-        password: ''
-    });
-    const { email, password } = inputsData;
-
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-        
-        dispatch(loginAction(inputsData))
-    }
 
     return (
         <section className="_login-main-container">
-            <form 
-                onSubmit={handleFormSubmit} 
-                className="_login-form"
+
+            <Formik
+                initialValues={{
+                    email: '',
+                    password: ''
+                }}
+                onSubmit={(values) => {
+                    dispatch(loginAction(values))
+                }}
+                validationSchema={yup.object().shape({
+                    email: yup.string()
+                                .min(5, 'The Email needs to have 5 or more letters',)
+                                .email('The Email needs to have valid characters')
+                                .required('Required'),
+                    password: yup.string()
+                                .min(5, 'the Password needs to have 5 or more characters')
+                                .required('Required')
+
+                })}
             >
-                <h1>Login</h1>
-                <div className="inputs">
-                    <label>Email</label>
-                    <input 
-                        type="text" 
-                        className="input"
-                        autoComplete="off"
-                        name="email"
-                        placeholder="Introduce Your Email Here"
-                        onChange={handleInputChange}
-                        value={email}
-                    />
-                </div>
-                <div className="inputs">
-                    <label>Password</label>
-                    <input 
-                        type="password" 
-                        className="input"
-                        autoComplete="off"
-                        name="password"
-                        placeholder="Introduce your Password Here"
-                        onChange={handleInputChange}
-                        value={password}
-                    />
-                </div>
-                {loading === true
-                    ?
-                    <div className="_boton-start-loading">
-                        <div className="loading-login"></div>
+                <Form className='_login-form'>
+                    <h1>Login</h1>
+                    <div className="inputs">
+                        <label>Email</label>
+                        <Field 
+                            name="email"
+                            className="input"
+                            placeholder="Introduce your Email here"
+                        />
+                        <ErrorMessage 
+                            name='email' 
+                            render={errorMsg => <span className='_create-error-message-form'>{errorMsg}</span>} 
+                        />
                     </div>
-                    :
-                    <button type="submit" className="__login-submit">
-                        Login
-                    </button>
-                }
-            </form>
+                    <div className="inputs">
+                        <label>Password</label>
+                        <Field 
+                            name="password"
+                            className="input"
+                            placeholder="Introduce your Password here"
+                            type="password"
+                        />
+                        <ErrorMessage 
+                            name='password' 
+                            render={errorMsg => <span className='_create-error-message-form'>{errorMsg}</span>} 
+                        />
+                    </div>
+                    {loading === true
+                        ?
+                        <div className="_boton-start-loading">
+                            <div className="loading-login"></div>
+                        </div>
+                        :
+                        <button type="submit" className="__login-submit">
+                            Login
+                        </button>
+                    }
+                </Form>
+            </Formik>
         </section>
     )
 }
