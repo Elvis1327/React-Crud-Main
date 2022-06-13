@@ -17,9 +17,17 @@ form{
     border-radius: 20px;
 }
 
+._create-h1{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.336);
+    font-weight: bold;
+}
+
 .inputs{
     width: 100%;
     padding: 7px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .input{
@@ -39,17 +47,17 @@ form{
     background-color: #26BE96;
     font-weight: bold;
     border-radius: 10px;
-    margin-top: 1px;
+    margin-top: 5px;
+    font-weight: bold;
 }
 
 // FORM VALIDATIONS
-._create-form-validation{
+._create-error-message-form{
     color: red;
-    font-size: 16px;
-    padding: 0px;
-    margin: 0px;
-    font-family: 'Poppins';
+    font-weight: bold;
 }
+
+
 
 
 

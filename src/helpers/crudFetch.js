@@ -6,12 +6,6 @@ export const getAllUsersFetch = async () => {
     const { data } = await restApiData.get('/api/crud/get-all');
     return data;
 };
- 
-// GET ONE USER
-export const getOneUserFetch = async (id) => {
-    const { data } = await restApiData.get(`/api/crud/get-one/${id}`);
-    return data.oneUser;
-};
 
 // CREATE ONE USER
 export const createOneUserFetch = async (user) => {

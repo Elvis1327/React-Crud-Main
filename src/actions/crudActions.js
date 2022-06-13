@@ -5,7 +5,6 @@ import {
     deleteOneUserFetch, 
     editOneUserFetch, 
     getAllUsersFetch ,
-    getOneUserFetch
     } from '../helpers/crudFetch';
 
 import { TYPES } from '../types/types';
@@ -23,20 +22,6 @@ export const getAllUsersAction = () => {
         dispatch(getAllUsers(resp));
     }
 };
-
-// GET ONE USER
-const getOneUser = (user) => {
-    return {
-        type: TYPES.getOneUser,
-        payload: user
-    };
-};
-export const getOneUserAction = (id) => {
-    return async (dispatch) => {
-        const resp = await getOneUserFetch(id);
-        dispatch(getOneUser(resp))
-    }
-}
 
 // CREATE ONE USER
 const createOneUser = (user) => {
